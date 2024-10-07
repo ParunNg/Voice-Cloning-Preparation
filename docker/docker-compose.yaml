@@ -1,0 +1,19 @@
+services:
+  code:
+    container_name: voice_cloning_preparation
+    platform: linux/x86_64
+    tty: true
+    build:
+      context: ..
+      dockerfile: docker/.Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]
+    working_dir: /code
+    volumes:
+      - ../code:/code
+      - ../.cache/huggingface:/root/.cache/huggingface
